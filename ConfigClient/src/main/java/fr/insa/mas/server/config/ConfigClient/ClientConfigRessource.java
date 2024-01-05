@@ -14,11 +14,41 @@ public class ClientConfigRessource {
 	private String dbHost;
 	@Value("${db.port}")
 	private String dbPort;
+	@Value("${db.url}")
+	private String dbUrl;
+	@Value("${db.user}")
+	private String dbUser;
+	@Value("${db.password}")
+	private String dbPassword;
 	
 	@GetMapping("/dbHost")
 	public String getDbHost() {
 		System.out.println("dbHost: "+dbHost);
 		return dbHost;
+	}
+	
+	@GetMapping("/dbPort")
+	public String getDbPort() {
+		System.out.println("dbPort: " + dbPort);
+		return dbPort;
+	}
+	
+	@GetMapping("/dbUrl")
+	public String getDbUrl() {
+		System.out.println("dbUrl: " + dbUrl);
+		return dbUrl;
+	}
+	
+	@GetMapping("/dbUser")
+	public String getDbUser() {
+		System.out.println("dbUser: " + dbUser);
+		return dbUser;
+	}
+	
+	@GetMapping("/dbPassword")
+	public String getDbPassword() {
+		System.out.println("dbPassword: " + dbPassword);
+		return dbPassword;
 	}
 	
 
