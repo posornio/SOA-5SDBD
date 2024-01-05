@@ -9,17 +9,21 @@
         <module name="AideManager" />
         <module name="BenevolManager" />
         <module name="ConfigClient" />
+        <module name="ValideurManager" />
         <module name="ConfigServer" />
         <module name="msDiscovery" />
+        <module name="BeneficiareManager" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AideManager" options="-parameters" />
+      <module name="BeneficiareManager" options="-parameters" />
       <module name="BenevolManager" options="-parameters" />
       <module name="ConfigClient" options="-parameters" />
       <module name="ConfigServer" options="-parameters" />
+      <module name="ValideurManager" options="-parameters" />
       <module name="msDiscovery" options="-parameters" />
     </option>
   </component>
