@@ -1,0 +1,10 @@
+<div>
+  <h1>Quel table analyser?</h1>
+  <mat-radio-group [(ngModel)]="favoriteSeason">
+    <mat-radio-button *ngFor="let season of seasons" [value]="season">
+      {{season}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <div>{{favoriteSeason}}</div>
+</div>
+<app-benevoles-table></app-benevoles-table>
