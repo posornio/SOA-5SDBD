@@ -1,5 +1,6 @@
 package fr.insa.mas.server.config.ConfigClient;
 
+import fr.insa.mas.server.config.ConfigClient.Model.DbInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,13 @@ public class ClientConfigRessource {
 		System.out.println("dbPassword: " + dbPassword);
 		return dbPassword;
 	}
+
+	@GetMapping("/dbInfo")
+	public DbInfo getDbInfo() {
+		System.out.println("dbInfo: " + new DbInfo(dbUrl, dbUser, dbPassword));
+		return new DbInfo(dbUrl, dbUser, dbPassword);
+	}
+
 	
 
 }
