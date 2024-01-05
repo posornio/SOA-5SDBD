@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "SOA-GUI:build:production"
+              "buildTarget": "SOA-GUI:build:production"
             },
             "development": {
-              "browserTarget": "SOA-GUI:build:development"
+              "buildTarget": "SOA-GUI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "SOA-GUI:build"
+            "buildTarget": "SOA-GUI:build"
           }
         },
         "test": {
