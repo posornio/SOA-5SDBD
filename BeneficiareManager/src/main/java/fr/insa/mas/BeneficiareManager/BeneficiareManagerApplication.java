@@ -1,5 +1,6 @@
 package fr.insa.mas.BeneficiareManager;
 
+import fr.insa.mas.BeneficiareManager.Model.DbInfo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -13,12 +14,12 @@ import java.sql.DriverManager;
 public class BeneficiareManagerApplication {
 	@Bean
 	public Connection dbinit() throws Exception {
-		String url = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/projet_gei_064";
-		String user = "projet_gei_064";
-		String password = "Aepahzu1";
+		DbInfo dbInfo = this.restTemplate().getForObject("http://localhost:8087/dbInfo", DbInfo.class);
 
 		Class.forName("com.mysql.jdbc.Driver");
-		return DriverManager.getConnection(url, user, password);
+		System.out.println(dbInfo);
+		return DriverManager.getConnection(dbInfo.getUrl(), dbInfo.getUser(), dbInfo.getPassword());
+
 
 		// Perform database operations here
 
