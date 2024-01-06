@@ -1,6 +1,14 @@
 <button class="btn btn-primary" (click)="onSelectAdd()">
   Ajouter un Benevole
 </button>
+<button
+class="btn-primary-delete"
+[class.btn-primary-delete-selected]="clickedRow"
+(click)="onSelectRemove()"
+*ngIf="this.clickedRow"
+>
+Supprimer un benevole
+</button>
 <div class="add" *ngIf="this.add">
   <div class="wrapper">
     <input

@@ -40,6 +40,8 @@ public class ValideurController {
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void ajouterValideur( @RequestBody Valideur valideur) {
         String sql = "INSERT INTO Valideurs(Nom,Prenom) VALUES(?,?)";
+        System.out.println(valideur);
+        System.out.println("Valideur ajouté");
         //(IDUSERS,LOGIN)
         try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, valideur.getNom());

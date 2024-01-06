@@ -56,7 +56,7 @@ export class httpClientService {
 
   deleteBenevole(id: number): Observable<any> {
     let port = '8090';
-    let url = this.baseUrl + port + '/benevoles/delete/' + id;
+    let url = this.baseUrl + port + '/benevoles/' + id;
     console.log(url);
     return this.http.delete<any>(url);
   }
@@ -85,7 +85,7 @@ export class httpClientService {
 
   deleteBeneficiaire(id: number): Observable<any> {
     let port = '8093';
-    let url = this.baseUrl + port + '/beneficiaire/delete/' + id;
+    let url = this.baseUrl + port + '/beneficiaire/' + id;
     console.log(url);
     return this.http.delete<any>(url);
   }
@@ -113,5 +113,27 @@ export class httpClientService {
     console.log(url);
     return this.http.delete<any>(url);
   }
-  
+
+
+  validerAide(id: number,validator_id :number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/valider';
+    console.log(url);
+    return this.http.post<any>(url, { id: id, traite_par: validator_id});
+  }
+
+  refuserAide(id:number,validator_id :number, motif:string): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/rejeter';
+    console.log(url);
+    return this.http.post<any>(url, { id: id, traite_par: validator_id, motif: motif });
+  }
+
+  affecterAide(id:number,validator_id :number,benevol_id :number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/affecter/';
+    console.log(url);
+    return this.http.post<any>(url, { id: id, traite_par: validator_id, status: 'affecte' , benevol_id : benevol_id});
+  }
+
 }

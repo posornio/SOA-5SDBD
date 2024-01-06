@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "2f8587a0-cde2-4215-8ee0-973c2dc67626",
+		"name": "Projet MicroServices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31466968"
+	},
+	"item": [
+		{
+			"name": "Benevoles",
+			"item": [
+				{
+					"name": "New Benevol",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"John\",\n  \"prenom\": \"Doe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/benevoles/add?nom=Neymar&prenom=Jr",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"benevoles",
+								"add"
+							],
+							"query": [
+								{
+									"key": "nom",
+									"value": "Neymar"
+								},
+								{
+									"key": "prenom",
+									"value": "Jr"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NbBenevoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/benevoles/nbOf",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"benevoles",
+								"nbOf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Benevol By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/benevoles/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"benevoles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Benevole",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/benevoles/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"benevoles",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/benevoles/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"benevoles",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Valideurs",
+			"item": [
+				{
+					"name": "New Valideur",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Elon\",\n  \"prenom\": \"Musk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8094/valideurs/add?nom=Benzema&prenom=Karim",
+							"host": [
+								"localhost"
+							],
+							"port": "8094",
+							"path": [
+								"valideurs",
+								"add"
+							],
+							"query": [
+								{
+									"key": "nom",
+									"value": "Benzema"
+								},
+								{
+									"key": "prenom",
+									"value": "Karim"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NbValideurs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8094/valideurs/nbOf",
+							"host": [
+								"localhost"
+							],
+							"port": "8094",
+							"path": [
+								"valideurs",
+								"nbOf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Valideur By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8094/valideurs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8094",
+							"path": [
+								"valideurs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8094/valideurs/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8094",
+							"path": [
+								"valideurs",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Beneficiaires",
+			"item": [
+				{
+					"name": "New Beneficiare",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"John\",\n  \"prenom\": \"Doe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8093/beneficiaire/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8093",
+							"path": [
+								"beneficiaire",
+								"add"
+							],
+							"query": [
+								{
+									"key": "nom",
+									"value": "New",
+									"disabled": true
+								},
+								{
+									"key": "prenom",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NbBenevoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8093/beneficiaire/nbOf",
+							"host": [
+								"localhost"
+							],
+							"port": "8093",
+							"path": [
+								"beneficiaire",
+								"nbOf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Benevol By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8093/beneficiaire/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8093",
+							"path": [
+								"beneficiaire",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8093/beneficiaire/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8093",
+							"path": [
+								"beneficiaire",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aide",
+			"item": [
+				{
+					"name": "NbAide",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8092/aide/nbOf",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"nbOf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Aide By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8092/aide/get/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nouvelle Aide",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"John\",\n  \"status\": \"Doe\",\n  \"motif_rejet\": \"\",\n  \"benevol_id\":1,\n  \"traite_par\":1,\n  \"demande_par\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8092/aide/add?type=Financiere&status=Envoyé&motif_rejet=null&benevol_Id=1&traite_par=0&demande_par=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"add"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Financiere"
+								},
+								{
+									"key": "status",
+									"value": "Envoyé"
+								},
+								{
+									"key": "motif_rejet",
+									"value": "null"
+								},
+								{
+									"key": "benevol_Id",
+									"value": "1"
+								},
+								{
+									"key": "traite_par",
+									"value": "0"
+								},
+								{
+									"key": "demande_par",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rejeter Aide",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"id\":1,\n  \"traite_par\":1,\n  \"motif_rejet\":\"documents\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8092/aide/rejeter",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"rejeter"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Envoyé",
+									"disabled": true
+								},
+								{
+									"key": "motif_rejet",
+									"value": "null",
+									"disabled": true
+								},
+								{
+									"key": "benevol_Id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "traite_par",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "demande_par",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valider Aide",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\":3,\n  \"traite_par\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8092/aide/valider",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"valider"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Affecter Aide",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\":2,\n  \"benevol_id\":3,\n  \"traite_par\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8092/aide/affecter",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"affecter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8092/aide/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Aide",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8092/aide/delete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"aide",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DbInfo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8087/dbInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"dbInfo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

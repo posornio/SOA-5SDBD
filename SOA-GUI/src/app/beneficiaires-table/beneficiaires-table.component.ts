@@ -53,6 +53,7 @@ export class BeneficiairesTableComponent {
   }
 
   async ngOnInit() {
+    ELEMENT_DATA = [];
     this.httpClient.getAllBeneficiaires().subscribe((data) => {
       this.data = data;
       console.log(this.data);
@@ -90,5 +91,23 @@ export class BeneficiairesTableComponent {
   }
   onSelectAdd() {
     this.add = !this.add;
+  }
+  onSelectRemove() {
+    if (this.clickedRow) {
+      let q = this.httpClient.deleteBeneficiaire(this.clickedRow.id).subscribe(
+        (response) => {
+          console.log('Aide deleted successfully:', response);
+          // Handle success, if needed
+        },
+        (error) => {
+          console.error('Error deleting Aide:', error);
+          // Handle error, if needed
+        }
+      );
+      this.ngOnInit();
+      this._snackBar.open('Aide supprimée', 'Fermer', {
+        duration: 2000,
+      });
+    }
   }
 }

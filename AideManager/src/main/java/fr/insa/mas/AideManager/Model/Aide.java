@@ -2,8 +2,10 @@ package fr.insa.mas.AideManager.Model;
 
 public class Aide {
 	private int id;
-	private String status;
 	private String type;
+	
+	private String status;
+
 	private String motif_rejet;
 	private int benevol_id;
 
@@ -57,8 +59,9 @@ public class Aide {
 	public Aide(int id, String status, String type, String motif_rejet, int benevol_id, int traite_par, int demande_par) {
 		super();
 		this.id = id;
-		this.status = status;
 		this.type = type;
+		this.status = status;
+
 		this.motif_rejet = motif_rejet;
 		this.benevol_id = benevol_id;
 		this.traite_par = traite_par;
@@ -78,4 +81,11 @@ public class Aide {
 		this.demande_par = demande_par;
 	}
 
+	public Aide(int id, String status, String motif_rejet, int traite_par){
+		super();
+		this.id = id;
+		this.status = status;
+		this.motif_rejet = motif_rejet;
+		this.traite_par = traite_par;
+	}
 }

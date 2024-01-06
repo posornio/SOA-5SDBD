@@ -20,33 +20,50 @@ import fr.insa.mas.AideManager.Model.Aide;
 public class AideController {
 	@Autowired
 	Connection connection = null;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	@GetMapping("/{id}")
-	public Aide getAideById(@PathVariable("id") int id) {
-        String sql = "SELECT * FROM Aide WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                String type = rs.getString("type");
-                String status = rs.getString("status");
-                String motif = rs.getString("motif_rejet");
-                int benevolId = rs.getInt("benevol_id");
+
+@GetMapping("/nbOf")
+	public int getNumberAide() {
+		String sql = "SELECT COUNT(*) FROM Aide";
+		try (Statement stmt = connection.createStatement()) {
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				int nbOf = rs.getInt(1);
+				return nbOf;
+			}
+			return 0;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return 0;
+		}
+	}
+
+	@GetMapping("/get/{id}")
+	public Aide getAide(@PathVariable int id) {
+		String sql = "SELECT * FROM Aide WHERE id = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int idAide = rs.getInt("id");
+				String type = rs.getString("type");
+				String status = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-                Aide aide = new Aide(id,type, status, motif, benevolId,traitePar,demandePar);
-                return aide;
-            }
-            return null;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-	
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				return aide;
+			}
+			return null;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
 	@PostMapping(path="/add", consumes = "application/json")
 	public String addAide(@RequestBody Aide aide) {
 		String sql = "INSERT INTO Aide(type, status, motif_rejet, benevol_id,traite_par,demande_par) VALUES(?,?,?,?,?,?)";
@@ -64,7 +81,7 @@ public class AideController {
 			return "Erreur lors de l'ajout de l'aide";
 		}
 	}
-	
+
 	@PostMapping("/update")
 	public String updateAide(int id, String type, String status, String motif, int benevolId) {
 		String sql = "UPDATE Aide SET type = ?, status = ?, motif_rejet = ?, benevol_id = ? WHERE id = ?";
@@ -81,8 +98,8 @@ public class AideController {
 			return "Erreur lors de la modification de l'aide";
 		}
 	}
-	
-	@DeleteMapping("/{id}")
+
+	@DeleteMapping("/delete/{id}")
 	public String deleteAide(@PathVariable int id) {
 		String sql = "DELETE FROM Aide WHERE id = ?";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -94,9 +111,10 @@ public class AideController {
 			return "Erreur lors de la suppression de l'aide";
 		}
 	}
-	
-	@GetMapping("/getAll")	
+
+	@GetMapping("/getAll")
 	public List<Aide> getAllAide() {
+		System.out.println("getAllAide");
         String sql = "SELECT * FROM Aide";
 
 		 List<Aide> aides = new ArrayList<Aide>();
@@ -122,6 +140,8 @@ public class AideController {
 
 	@PostMapping(path= "/valider", consumes = "application/json")
 	public String validerAide(@RequestBody Aide aide) {
+		System.out.println("validerAide");
+		System.out.println(aide.getId());
 		String sql = "UPDATE Aide SET status = ? , traite_par = ?  WHERE id = ?";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setString(1, "Valide");
@@ -137,6 +157,9 @@ public class AideController {
 
 	@PostMapping(path= "/rejeter", consumes = "application/json")
 	public String rejeterAide(@RequestBody Aide aide) {
+		System.out.println("rejeterAide");
+		System.out.println(aide.getId());
+		System.out.println(aide.getMotif_rejet());
 		String sql = "UPDATE Aide SET status = ? , motif_rejet = ? , traite_par = ?  WHERE id = ?";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setString(1, "Rejeté");
@@ -154,10 +177,14 @@ public class AideController {
 
 	@PostMapping(path= "/affecter", consumes = "application/json")
 	public String affecterAide(@RequestBody Aide aide) {
-		String sql = "UPDATE Aide SET benevol_id = ? WHERE id = ?";
+		System.out.println("affecterAide");
+		System.out.println(aide.getId());
+		System.out.println(aide.getBenevol_id());
+		String sql = "UPDATE Aide SET benevol_id = ?, traite_par = ? WHERE id = ?";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setInt(1, aide.getBenevol_id());
-			pstmt.setInt(2, aide.getId());
+			pstmt.setInt(2, aide.getTraite_par());
+			pstmt.setInt(3, aide.getId());
 			pstmt.executeUpdate();
 			return "Aide affectée";
 		} catch (SQLException e) {
@@ -165,6 +192,6 @@ public class AideController {
 			return "Erreur lors de l'affectation de l'aide";
 		}
 	}
-	
+
 
 }

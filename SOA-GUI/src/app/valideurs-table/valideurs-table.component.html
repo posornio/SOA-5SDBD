@@ -26,10 +26,11 @@
   </div>
   <button
   class="btn-primary-delete"
+  *ngIf = "this.clickedRow"
   [class.btn-primary-delete-selected]="clickedRow"
   (click)="onSelectRemove()"
 >
-  Supprimer un créneau
+  Supprimer un valideur
 </button>
 <div class="table">
     <table

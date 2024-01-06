@@ -51,6 +51,8 @@ export class ValideursTableComponent {
   }
 
   async ngOnInit() {
+    ELEMENT_DATA = [];
+
     this.httpClient.getAllValideurs().subscribe((data) => {
       this.data = data;
       console.log(this.data);
@@ -71,7 +73,7 @@ export class ValideursTableComponent {
     console.log(this.newPrenom);
     let nom = this.newNom;
     let prenom = this.newPrenom;
-    let q = this.httpClient.postBeneficiaire(nom, prenom).subscribe(
+    let q = this.httpClient.postValideur(nom, prenom).subscribe(
       (response) => {
         console.log('Valideur added successfully:', response);
         // Handle success, if needed
@@ -103,9 +105,6 @@ export class ValideursTableComponent {
         }
       );
       this.ngOnInit();
-      this._snackBar.open('Aide supprimée', 'Fermer', {
-        duration: 2000,
-      });
     }
   }
 }

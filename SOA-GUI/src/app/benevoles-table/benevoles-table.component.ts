@@ -53,6 +53,7 @@ export class BenevolesTableComponent implements OnInit {
   }
 
   async ngOnInit() {
+    ELEMENT_DATA = [];
     this.httpClient.getAllBenevoles().subscribe((data) => {
       this.data = data;
       console.log(this.data);
@@ -89,5 +90,23 @@ export class BenevolesTableComponent implements OnInit {
   }
   onSelectAdd() {
     this.add = !this.add;
+  }
+  onSelectRemove() {
+    if (this.clickedRow) {
+      let q = this.httpClient.deleteBenevole(this.clickedRow.id).subscribe(
+        (response) => {
+          console.log('Aide deleted successfully:', response);
+          // Handle success, if needed
+        },
+        (error) => {
+          console.error('Error deleting Aide:', error);
+          // Handle error, if needed
+        }
+      );
+      this.ngOnInit();
+      this._snackBar.open('Aide supprimée', 'Fermer', {
+        duration: 2000,
+      });
+    }
   }
 }
