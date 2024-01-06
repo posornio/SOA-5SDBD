@@ -82,15 +82,15 @@ public class AideController {
 		}
 	}
 
-	@PostMapping("/update")
-	public String updateAide(int id, String type, String status, String motif, int benevolId) {
+	@PatchMapping("/update/{id}")
+	public String updateAide(@PathVariable(value = "id") int aideId, @RequestBody Aide aide) {
 		String sql = "UPDATE Aide SET type = ?, status = ?, motif_rejet = ?, benevol_id = ? WHERE id = ?";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-			pstmt.setString(1, type);
-			pstmt.setString(2, status);
-			pstmt.setString(3, motif);
-			pstmt.setInt(4, benevolId);
-			pstmt.setInt(5, id);
+			pstmt.setString(1, aide.getType());
+			pstmt.setString(2, aide.getStatus());
+			pstmt.setString(3, aide.getMotif_rejet());
+			pstmt.setInt(4, aide.getBenevol_id());
+			pstmt.setInt(5, aideId);
 			pstmt.executeUpdate();
 			return "Aide modifiée";
 		} catch (SQLException e) {
