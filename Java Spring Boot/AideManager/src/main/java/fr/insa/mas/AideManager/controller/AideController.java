@@ -164,6 +164,31 @@ public class AideController {
 		}
 	}
 
+	@GetMapping("/getByManager/{id}")
+	public List<Aide> getAideByManager(@PathVariable int id) {
+		String sql = "SELECT * FROM Aide WHERE traite_par = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<Aide> aides = new ArrayList<Aide>();
+			while (rs.next()) {
+				int idAide = rs.getInt("id");
+				String type = rs.getString("type");
+				String status = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				aides.add(aide);
+			}
+			return aides;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
 
 	@PostMapping(path="/add", consumes = "application/json")
 	public String addAide(@RequestBody Aide aide) {
