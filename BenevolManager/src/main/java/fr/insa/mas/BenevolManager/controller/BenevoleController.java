@@ -3,6 +3,7 @@
 import fr.insa.mas.BenevolManager.Model.Benevole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/benevoles")
 public class BenevoleController {
     @Autowired
@@ -35,13 +37,13 @@ public class BenevoleController {
 		}
     }
     
-    @PostMapping("/add")
-    public void ajouterBenevol( String nom,String prenom) {
+    @PostMapping(path= "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void ajouterBenevol( @RequestBody Benevole benevole) {
         String sql = "INSERT INTO Benevoles(Nom,Prenom) VALUES(?,?)";
         //(IDUSERS,LOGIN)
         try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, prenom);
-            pstmt.setString(2, nom);
+            pstmt.setString(1, benevole.getNom());
+            pstmt.setString(2, benevole.getPrenom());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -84,6 +86,17 @@ public class BenevoleController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBenevole(@PathVariable("id") int id) {
+        String sql = "DELETE FROM Benevoles WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

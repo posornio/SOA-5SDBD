@@ -13,20 +13,17 @@ import { httpClientService } from 'src/httpClientService';
 
 let ELEMENT_DATA: any[] = [];
 
-
 @Component({
-  selector: 'app-benevoles-table',
-  templateUrl: './benevoles-table.component.html',
-  styleUrls: ['./benevoles-table.component.css']
+  selector: 'app-aides-table',
+  templateUrl: './aides-table.component.html',
+  styleUrl: './aides-table.component.css'
 })
-export class BenevolesTableComponent implements OnInit {
-  add = false;
-  newPrenom = '';
-  newNom = '';
-  displayedColumns: string[] = ['id', 'Name', 'Capacity', 'Status'];
+export class AidesTableComponent {
+  displayedColumns: string[] = ['id', 'Status', 'Type', 'Motif de rejet', 'Benevole associé'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filterValue: string = '';
   clickedRow: any;
+  benevoles : any[] = [];
   clickedRowId: string = '';
   ready: boolean = false;
   data: any;
@@ -53,7 +50,7 @@ export class BenevolesTableComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.httpClient.getAllBenevoles().subscribe((data) => {
+    this.httpClient.getAllAides().subscribe((data) => {
       this.data = data;
       console.log(this.data);
       for (let i = 0; i < this.data.length; i++) {
@@ -64,30 +61,50 @@ export class BenevolesTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
     }
     );
-    this.displayedColumns = ['id', 'Nom', 'Prenom'];
+    this.getAllBenevoles();
+    this.displayedColumns = ['id', 'Status', 'Type', 'Motif de rejet', 'Benevole associé'];
     this.ready = true;
   }
-  onClickAddConfirm() {
-    console.log(this.newNom);
-    console.log(this.newPrenom);
-    let nom = this.newNom;
-    let prenom = this.newPrenom;
-    let q = this.httpClient.postBeneficiaire(nom, prenom).subscribe(
+
+  getAllBenevoles() {
+    this.httpClient.getAllBenevoles().subscribe((data) => {
+      this.benevoles = data;
+      })}
+
+  benevolName(id: number) {
+    if (id) {
+    let nom = '';
+    let prenom = '';
+    for (let i = 0; i < this.benevoles.length; i++) {
+      if (this.benevoles[i].id == id) {
+        nom = this.benevoles[i].nom;
+        prenom = this.benevoles[i].prenom;
+      }
+    }
+    let name = nom + ' ' + prenom;
+    return name;
+  }
+  else {
+    return '';
+  }
+}
+
+onSelectRemove() {
+  if (this.clickedRow) {
+    let q = this.httpClient.deleteAide(this.clickedRow.id).subscribe(
       (response) => {
-        console.log('Valideur added successfully:', response);
+        console.log('Aide deleted successfully:', response);
         // Handle success, if needed
       },
       (error) => {
-        console.error('Error adding Valideur:', error);
+        console.error('Error deleting Aide:', error);
         // Handle error, if needed
       }
     );
     this.ngOnInit();
-    
-    this.add = false;
-  
+    this._snackBar.open('Aide supprimée', 'Fermer', {
+      duration: 2000,
+    });
   }
-  onSelectAdd() {
-    this.add = !this.add;
-  }
+}
 }

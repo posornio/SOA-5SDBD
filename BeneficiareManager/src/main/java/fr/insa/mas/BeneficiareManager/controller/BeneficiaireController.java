@@ -2,6 +2,7 @@
 
 import fr.insa.mas.BeneficiareManager.Model.Beneficiaire;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/beneficiaire")
 public class BeneficiaireController {
     @Autowired
@@ -34,13 +36,13 @@ public class BeneficiaireController {
 		}
     }
     
-    @PostMapping("/add")
-    public void ajouterBeneficiaire( String nom,String prenom) {
+    @PostMapping(path = "/add",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void ajouterBeneficiaire(@RequestBody Beneficiaire beneficiaire) {
         String sql = "INSERT INTO Beneficiaire(Nom,Prenom) VALUES(?,?)";
         //(IDUSERS,LOGIN)
         try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, prenom);
-            pstmt.setString(2, nom);
+            pstmt.setString(1, beneficiaire.getNom());
+            pstmt.setString(2, beneficiaire.getPrenom());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -82,6 +84,19 @@ public class BeneficiaireController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBeneficiaire(@PathVariable int id) {
+        String sql = "DELETE FROM Beneficiaire WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            return "Beneficiaire supprimé";
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return "Erreur lors de la suppression du Beneficiaire";
         }
     }
 }

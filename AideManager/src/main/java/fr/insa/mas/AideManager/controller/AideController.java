@@ -9,17 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import fr.insa.mas.AideManager.Model.Aide;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/aide")
 public class AideController {
 	@Autowired
@@ -39,7 +35,9 @@ public class AideController {
                 String status = rs.getString("status");
                 String motif = rs.getString("motif_rejet");
                 int benevolId = rs.getInt("benevol_id");
-                Aide aide = new Aide(id,type, status, motif, benevolId);
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+                Aide aide = new Aide(id,type, status, motif, benevolId,traitePar,demandePar);
                 return aide;
             }
             return null;
@@ -49,14 +47,16 @@ public class AideController {
         }
     }
 	
-	@PostMapping("/add")
-	public String addAide(String type, String status, String motif, int benevolId) {
-		String sql = "INSERT INTO Aide(type, status, motif_rejet, benevol_id) VALUES(?,?,?,?)";
+	@PostMapping(path="/add", consumes = "application/json")
+	public String addAide(@RequestBody Aide aide) {
+		String sql = "INSERT INTO Aide(type, status, motif_rejet, benevol_id,traite_par,demande_par) VALUES(?,?,?,?,?,?)";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-			pstmt.setString(1, type);
-			pstmt.setString(2, status);
-			pstmt.setString(3, motif);
-			pstmt.setInt(4, benevolId);
+			pstmt.setString(1, aide.getType());
+			pstmt.setString(2, aide.getStatus());
+			pstmt.setString(3, aide.getMotif_rejet());
+			pstmt.setInt(4, aide.getBenevol_id());
+			pstmt.setInt(5, aide.getTraite_par());
+			pstmt.setInt(6, aide.getDemande_par());
 			pstmt.executeUpdate();
 			return "Aide ajoutée";
 		} catch (SQLException e) {
@@ -108,7 +108,9 @@ public class AideController {
 					String status = rs.getString("status");
 					String motif = rs.getString("motif_rejet");
 					int benevolId = rs.getInt("benevol_id");
-					Aide aide = new Aide(id,type, status, motif, benevolId);
+					int traitePar = rs.getInt("traite_par");
+					int demandePar = rs.getInt("demande_par");
+					Aide aide = new Aide(id,type, status, motif, benevolId,traitePar,demandePar);
 	                aides.add(aide);
 	            }
 	            return aides;
@@ -117,8 +119,52 @@ public class AideController {
 	            return null;
 	        }
 	}
-	
-	
+
+	@PostMapping(path= "/valider", consumes = "application/json")
+	public String validerAide(@RequestBody Aide aide) {
+		String sql = "UPDATE Aide SET status = ? , traite_par = ?  WHERE id = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, "Valide");
+			pstmt.setInt(2, aide.getTraite_par());
+			pstmt.setInt(3, aide.getId());
+			pstmt.executeUpdate();
+			return "Aide validée";
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return "Erreur lors de la validation de l'aide";
+		}
+	}
+
+	@PostMapping(path= "/rejeter", consumes = "application/json")
+	public String rejeterAide(@RequestBody Aide aide) {
+		String sql = "UPDATE Aide SET status = ? , motif_rejet = ? , traite_par = ?  WHERE id = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, "Rejeté");
+			pstmt.setString(2, aide.getMotif_rejet());
+			pstmt.setInt(3, aide.getTraite_par());
+			pstmt.setInt(4, aide.getId());
+			pstmt.executeUpdate();
+			return "Aide rejetée";
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return "Erreur lors du rejet de l'aide";
+		}
+
+	}
+
+	@PostMapping(path= "/affecter", consumes = "application/json")
+	public String affecterAide(@RequestBody Aide aide) {
+		String sql = "UPDATE Aide SET benevol_id = ? WHERE id = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, aide.getBenevol_id());
+			pstmt.setInt(2, aide.getId());
+			pstmt.executeUpdate();
+			return "Aide affectée";
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return "Erreur lors de l'affectation de l'aide";
+		}
+	}
 	
 
 }

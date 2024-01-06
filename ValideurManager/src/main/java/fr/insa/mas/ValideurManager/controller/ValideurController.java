@@ -3,6 +3,7 @@
 import fr.insa.mas.ValideurManager.Model.Valideur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/valideurs")
 public class ValideurController {
     @Autowired
@@ -35,13 +37,13 @@ public class ValideurController {
 		}
     }
     
-    @PostMapping("/add")
-    public void ajouterValideur( String nom,String prenom) {
+    @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void ajouterValideur( @RequestBody Valideur valideur) {
         String sql = "INSERT INTO Valideurs(Nom,Prenom) VALUES(?,?)";
         //(IDUSERS,LOGIN)
         try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, prenom);
-            pstmt.setString(2, nom);
+            pstmt.setString(1, valideur.getNom());
+            pstmt.setString(2, valideur.getPrenom());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -83,6 +85,19 @@ public class ValideurController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteValideur(@PathVariable int id) {
+        String sql = "DELETE FROM Valideurs WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            return "Valideur supprimé";
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return "Erreur lors de la suppression du Valideur";
         }
     }
 }

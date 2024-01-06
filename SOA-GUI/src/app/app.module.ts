@@ -8,16 +8,20 @@ import {MatRadioModule} from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { AidesTableComponent } from './aides-table/aides-table.component';
+import { ValideursTableComponent } from './valideurs-table/valideurs-table.component';
+import { BeneficiairesTableComponent } from './beneficiaires-table/beneficiaires-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BenevolesTableComponent
+    BenevolesTableComponent,
+    AidesTableComponent,
+    ValideursTableComponent,
+    BeneficiairesTableComponent
+
   ],
-  imports: [
-    BrowserModule,HttpClientModule,
-    AppRoutingModule,MatRadioModule,MatTableModule, FormsModule,
-  ],
+  imports: [BrowserModule,HttpClientModule,AppRoutingModule,MatRadioModule,MatTableModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

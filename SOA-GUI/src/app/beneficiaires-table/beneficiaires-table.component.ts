@@ -15,15 +15,15 @@ let ELEMENT_DATA: any[] = [];
 
 
 @Component({
-  selector: 'app-benevoles-table',
-  templateUrl: './benevoles-table.component.html',
-  styleUrls: ['./benevoles-table.component.css']
+  selector: 'app-beneficiaires-table',
+  templateUrl: './beneficiaires-table.component.html',
+  styleUrl: './beneficiaires-table.component.css'
 })
-export class BenevolesTableComponent implements OnInit {
+export class BeneficiairesTableComponent {
   add = false;
   newPrenom = '';
   newNom = '';
-  displayedColumns: string[] = ['id', 'Name', 'Capacity', 'Status'];
+  displayedColumns: string[] = ['id', 'Nom', 'Prenom'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filterValue: string = '';
   clickedRow: any;
@@ -53,7 +53,7 @@ export class BenevolesTableComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.httpClient.getAllBenevoles().subscribe((data) => {
+    this.httpClient.getAllBeneficiaires().subscribe((data) => {
       this.data = data;
       console.log(this.data);
       for (let i = 0; i < this.data.length; i++) {
@@ -67,6 +67,7 @@ export class BenevolesTableComponent implements OnInit {
     this.displayedColumns = ['id', 'Nom', 'Prenom'];
     this.ready = true;
   }
+
   onClickAddConfirm() {
     console.log(this.newNom);
     console.log(this.newPrenom);

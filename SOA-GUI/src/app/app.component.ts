@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SOA-GUI';
-  favoriteSeason: string = 'Winter';
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+  favoriteSeason: string = 'Benevoles';
+  seasons: string[] = ['Benevoles', 'Beneficiaires', 'Valideurs', 'Aides'];
 }

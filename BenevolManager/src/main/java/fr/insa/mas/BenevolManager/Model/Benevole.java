@@ -38,4 +38,13 @@ public class Benevole {
         this.prenom = prenom;
     }
 
+    public Benevole() {
+        super();
+    }
+    public Benevole(String nom, String prenom) {
+        super();
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
 }

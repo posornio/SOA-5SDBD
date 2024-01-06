@@ -38,4 +38,13 @@ public class Valideur {
         this.prenom = prenom;
     }
 
+    public Valideur() {
+        super();
+    }
+    public Valideur(String nom, String prenom) {
+        super();
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
 }

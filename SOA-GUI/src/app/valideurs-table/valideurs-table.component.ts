@@ -12,18 +12,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { httpClientService } from 'src/httpClientService';
 
 let ELEMENT_DATA: any[] = [];
-
-
 @Component({
-  selector: 'app-benevoles-table',
-  templateUrl: './benevoles-table.component.html',
-  styleUrls: ['./benevoles-table.component.css']
+  selector: 'app-valideurs-table',
+  templateUrl: './valideurs-table.component.html',
+  styleUrl: './valideurs-table.component.css'
 })
-export class BenevolesTableComponent implements OnInit {
+export class ValideursTableComponent {
   add = false;
   newPrenom = '';
   newNom = '';
-  displayedColumns: string[] = ['id', 'Name', 'Capacity', 'Status'];
+  displayedColumns: string[] = ['id', 'Nom', 'Prenom'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filterValue: string = '';
   clickedRow: any;
@@ -53,7 +51,7 @@ export class BenevolesTableComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.httpClient.getAllBenevoles().subscribe((data) => {
+    this.httpClient.getAllValideurs().subscribe((data) => {
       this.data = data;
       console.log(this.data);
       for (let i = 0; i < this.data.length; i++) {
@@ -67,6 +65,7 @@ export class BenevolesTableComponent implements OnInit {
     this.displayedColumns = ['id', 'Nom', 'Prenom'];
     this.ready = true;
   }
+
   onClickAddConfirm() {
     console.log(this.newNom);
     console.log(this.newPrenom);
@@ -89,5 +88,24 @@ export class BenevolesTableComponent implements OnInit {
   }
   onSelectAdd() {
     this.add = !this.add;
+  }
+
+  onSelectRemove() {
+    if (this.clickedRow) {
+      let q = this.httpClient.deleteAide(this.clickedRow.id).subscribe(
+        (response) => {
+          console.log('Aide deleted successfully:', response);
+          // Handle success, if needed
+        },
+        (error) => {
+          console.error('Error deleting Aide:', error);
+          // Handle error, if needed
+        }
+      );
+      this.ngOnInit();
+      this._snackBar.open('Aide supprimée', 'Fermer', {
+        duration: 2000,
+      });
+    }
   }
 }

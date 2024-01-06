@@ -7,4 +7,7 @@
   </mat-radio-group>
   <div>{{favoriteSeason}}</div>
 </div>
-<app-benevoles-table></app-benevoles-table>
+<app-benevoles-table *ngIf="favoriteSeason=='Benevoles'"></app-benevoles-table>
+<app-aides-table *ngIf="favoriteSeason=='Aides'"></app-aides-table>
+<app-valideurs-table *ngIf="favoriteSeason=='Valideurs'"></app-valideurs-table>
+<app-beneficiaires-table *ngIf="favoriteSeason=='Beneficiaires'"></app-beneficiaires-table>
