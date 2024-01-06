@@ -64,6 +64,107 @@ public class AideController {
 		}
 	}
 
+	@GetMapping("/getByBenevol/{id}")
+	public List<Aide> getAideByBenevol(@PathVariable int id) {
+		String sql = "SELECT * FROM Aide WHERE benevol_id = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<Aide> aides = new ArrayList<Aide>();
+			while (rs.next()) {
+				int idAide = rs.getInt("id");
+				String type = rs.getString("type");
+				String status = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				aides.add(aide);
+			}
+			return aides;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	@GetMapping("/getByDemande/{id}")
+	public List<Aide> getAideByDemande(@PathVariable int id) {
+		String sql = "SELECT * FROM Aide WHERE demande_par = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<Aide> aides = new ArrayList<Aide>();
+			while (rs.next()) {
+				int idAide = rs.getInt("id");
+				String type = rs.getString("type");
+				String status = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				aides.add(aide);
+			}
+			return aides;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	@GetMapping("/getByStatus/{status}")
+	public List<Aide> getAideByStatus(@PathVariable String status) {
+		String sql = "SELECT * FROM Aide WHERE status = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, status);
+			ResultSet rs = pstmt.executeQuery();
+			List<Aide> aides = new ArrayList<Aide>();
+			while (rs.next()) {
+				int idAide = rs.getInt("id");
+				String type = rs.getString("type");
+				String statusAide = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+				Aide aide = new Aide(idAide,type, statusAide, motif, benevolId,traitePar,demandePar);
+				aides.add(aide);
+			}
+			return aides;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	@GetMapping("/getByType/{type}")
+	public List<Aide> getAideByType(@PathVariable String type) {
+		String sql = "SELECT * FROM Aide WHERE type = ?";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, type);
+			ResultSet rs = pstmt.executeQuery();
+			List<Aide> aides = new ArrayList<Aide>();
+			while (rs.next()) {
+				int idAide = rs.getInt("id");
+				String typeAide = rs.getString("type");
+				String status = rs.getString("status");
+				String motif = rs.getString("motif_rejet");
+				int benevolId = rs.getInt("benevol_id");
+				int traitePar = rs.getInt("traite_par");
+				int demandePar = rs.getInt("demande_par");
+				Aide aide = new Aide(idAide,typeAide, status, motif, benevolId,traitePar,demandePar);
+				aides.add(aide);
+			}
+			return aides;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+
 	@PostMapping(path="/add", consumes = "application/json")
 	public String addAide(@RequestBody Aide aide) {
 		String sql = "INSERT INTO Aide(type, status, motif_rejet, benevol_id,traite_par,demande_par) VALUES(?,?,?,?,?,?)";
