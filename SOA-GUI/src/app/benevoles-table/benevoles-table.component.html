@@ -93,3 +93,5 @@ Supprimer un benevole
       ></tr>
     </table>
   </div>
+  <h1 *ngIf="this.clickedRow">Aides affectés à ce Benevol</h1>
+  <app-aides-table *ngIf="this.clickedRow" [tableType]="'Benevoles'" [id]="this.clickedRow.id"></app-aides-table>

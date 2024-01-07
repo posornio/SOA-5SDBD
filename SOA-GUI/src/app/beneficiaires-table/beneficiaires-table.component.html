@@ -93,3 +93,5 @@ Supprimer un Beneficiaire
       ></tr>
     </table>
   </div>
+  <h1 *ngIf="this.clickedRow">Aides demandés par ce Beneficiaire</h1>
+  <app-aides-table *ngIf="this.clickedRow" [tableType]="'Beneficiaires'" [id]="this.clickedRow.id"></app-aides-table>

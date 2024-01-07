@@ -11,6 +11,13 @@
         <option value="$PROJECT_DIR$/BenevolManager/pom.xml" />
         <option value="$PROJECT_DIR$/BeneficiareManager/pom.xml" />
         <option value="$PROJECT_DIR$/ValideurManager/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/msDiscovery/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/AideManager/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/BeneficiareManager/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/BenevolManager/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/ConfigClient/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/ConfigServer/pom.xml" />
+        <option value="$PROJECT_DIR$/Java Spring Boot/ValideurManager/pom.xml" />
       </list>
     </option>
   </component>

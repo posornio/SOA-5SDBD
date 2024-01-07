@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -19,6 +19,8 @@ let ELEMENT_DATA: any[] = [];
   styleUrl: './aides-table.component.css'
 })
 export class AidesTableComponent {
+  @Input() tableType: string = 'Aides';
+  @Input() id : number = 0;
   add = false;
   valider = false;
   refuse = false;
@@ -62,6 +64,7 @@ export class AidesTableComponent {
   async ngOnInit() {
     ELEMENT_DATA = [];
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    if (this.tableType == 'Aides') {
     this.httpClient.getAllAides().subscribe((data) => {
       this.data = data;
       console.log(this.data);
@@ -72,12 +75,54 @@ export class AidesTableComponent {
       this.dataSource = new MatTableDataSource(ELEMENT_DATA);
       this.dataSource.sort = this.sort;
     }
-    );
-    this.getAllBenevoles();
-    this.getAllBeneficiaires();
-    this.getAllValideurs();
-    this.ready = true;
-  }
+    );}
+    else if (this.tableType == 'Beneficiaires') {
+      this.httpClient.aidesByBeneficiaire(this.id).subscribe((data) => {
+        this.data = data;
+        console.log(this.data);
+        for (let i = 0; i < this.data.length; i++) {
+          let element = this.data[i];
+          ELEMENT_DATA.push(element);
+        }
+        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+        this.dataSource.sort = this.sort;
+      }
+      );}
+
+    else if (this.tableType == 'Benevoles') {
+      this.httpClient.aidesByBenevole(this.id).subscribe((data) => {
+        this.data = data;
+        console.log(this.data);
+        for (let i = 0; i < this.data.length; i++) {
+          let element = this.data[i];
+          ELEMENT_DATA.push(element);
+        }
+        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+        this.dataSource.sort = this.sort;
+      }
+      );}
+
+    else if (this.tableType == 'Valideurs') {
+      this.httpClient.aidesByValideur(this.id).subscribe((data) => {
+        this.data = data;
+        console.log(this.data);
+        for (let i = 0; i < this.data.length; i++) {
+          let element = this.data[i];
+          ELEMENT_DATA.push(element);
+        }
+        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+        this.dataSource.sort = this.sort;
+      }
+      );}
+
+      this.getAllBenevoles();
+      this.getAllBeneficiaires();
+      this.getAllValideurs();
+      this.ready = true;
+    }
+  
+  
+
 
   getAllBenevoles() {
     this.httpClient.getAllBenevoles().subscribe((data) => {

@@ -92,3 +92,5 @@
       ></tr>
     </table>
   </div>
+  <h1 *ngIf="this.clickedRow">Aides validés par ce Validateur/h1>
+  <app-aides-table *ngIf="this.clickedRow" [tableType]="'Valideur'" [id]="this.clickedRow.id"></app-aides-table>

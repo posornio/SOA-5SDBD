@@ -136,4 +136,25 @@ export class httpClientService {
     return this.http.post<any>(url, { id: id, traite_par: validator_id, status: 'affecte' , benevol_id : benevol_id});
   }
 
+  aidesByBeneficiaire(id:number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/getByDemande/'+id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+  aidesByBenevole(id:number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/getByBenevol/'+id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+  aidesByValideur(id:number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/getByManager/'+id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
 }
