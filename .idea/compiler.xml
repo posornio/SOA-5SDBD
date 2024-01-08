@@ -11,6 +11,7 @@
         <module name="ConfigClient" />
         <module name="ValideurManager" />
         <module name="ConfigServer" />
+        <module name="AvisManager" />
         <module name="msDiscovery" />
         <module name="BeneficiareManager" />
       </profile>
@@ -19,6 +20,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AideManager" options="-parameters" />
+      <module name="AvisManager" options="-parameters" />
       <module name="BeneficiareManager" options="-parameters" />
       <module name="BenevolManager" options="-parameters" />
       <module name="ConfigClient" options="-parameters" />

@@ -17,6 +17,13 @@ export class httpClientService {
     console.log(url);
     return this.http.get<any>(url);
   }
+
+  getAideById(id: number): Observable<any> {
+    let port = '8092';
+    let url = this.baseUrl + port + '/aide/get/' + id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
   postAide(nom: string, prenom: string): Observable<any> {
     let port = '8092';
     let url = this.baseUrl + port + '/aide/add';
@@ -153,6 +160,41 @@ export class httpClientService {
   aidesByValideur(id:number): Observable<any> {
     let port = '8092';
     let url = this.baseUrl + port + '/aide/getByManager/'+id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+  getAllAvis(): Observable<any> {
+    let port = '8095';
+    let url = this.baseUrl + port + '/avis/getAll';
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+  getAvisByAidId(id:number): Observable<any> {
+    let port = '8095';
+    let url = this.baseUrl + port + '/avis/getByAide/'+id;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+  postAvis(note:number,commentaire:string,aide_reference: string): Observable<any> {
+    let port = '8095';
+    let url = this.baseUrl + port + '/avis/add';
+    console.log(url);
+    return this.http.post<any>(url, { note: note, commentaire: commentaire, aide_reference: aide_reference });
+  }
+
+  deleteAvis(id: number): Observable<any> {
+    let port = '8095';
+    let url = this.baseUrl + port + '/avis/delete/' + id;
+    console.log(url);
+    return this.http.delete<any>(url);
+  }
+
+  getAvisByBenevole(id:number): Observable<any> {
+    let port = '8095';
+    let url = this.baseUrl + port + '/avis/getByBenevol/'+id;
     console.log(url);
     return this.http.get<any>(url);
   }

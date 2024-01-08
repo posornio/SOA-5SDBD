@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AidesTableComponent } from './aides-table/aides-table.component';
 import { ValideursTableComponent } from './valideurs-table/valideurs-table.component';
 import { BeneficiairesTableComponent } from './beneficiaires-table/beneficiaires-table.component';
+import { AvisTableComponent } from './avis-table/avis-table.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BeneficiairesTableComponent } from './beneficiaires-table/beneficiaires
     BenevolesTableComponent,
     AidesTableComponent,
     ValideursTableComponent,
-    BeneficiairesTableComponent
+    BeneficiairesTableComponent,
+    AvisTableComponent
 
   ],
   imports: [BrowserModule,HttpClientModule,AppRoutingModule,MatRadioModule,MatTableModule, FormsModule],

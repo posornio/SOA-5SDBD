@@ -114,6 +114,36 @@
           </button>
   </div>
 
+  <button
+  class="btn-primary-delete"
+  *ngIf="this.clickedRow"
+  [class.btn-primary-delete-selected]="clickedRow"
+  (click)="onSelectNoter()"
+>
+  Noter Aide
+</button>
+
+<div class="add" *ngIf="this.noter">
+    <div class="wrapper">
+      <input
+        type="integer"
+        class="number"
+        [(ngModel)]="valideur"
+        placeholder="Note"
+      />
+      <input
+      type="integer"
+      class="number-text"
+      [(ngModel)]="newType"
+      placeholder="Commentaire"
+    />
+    </div>
+      <button class="btn btn-primary" (click)="onClickNoterConfirm()">
+          Noter
+          </button>
+  </div>
+
+
 
 <div class="table">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -228,3 +258,8 @@
     ></tr>
   </table>
 </div>
+<div *ngIf="this.clickedRow">
+  <h1>Avis associés à cet aide</h1>
+  <h2>Note : {{this.avisIndiv.note}}</h2>
+  <h2>Commentaire : {{this.avisIndiv.commentaire}}</h2>
+  </div>

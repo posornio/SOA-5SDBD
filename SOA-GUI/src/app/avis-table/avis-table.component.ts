@@ -14,31 +14,30 @@ import { httpClientService } from 'src/httpClientService';
 let ELEMENT_DATA: any[] = [];
 
 @Component({
-  selector: 'app-aides-table',
-  templateUrl: './aides-table.component.html',
-  styleUrl: './aides-table.component.css'
+  selector: 'app-avis-table',
+  templateUrl: './avis-table.component.html',
+  styleUrl: './avis-table.component.css'
 })
-export class AidesTableComponent {
-  @Input() tableType: string = 'Aides';
+export class AvisTableComponent {
+  @Input() tableType: string = 'Avis';
   @Input() id : number = 0;
   add = false;
   valider = false;
   refuse = false;
   affecter = false;
-  noter = false;
   newType = '';
   newNom = '';
   affectTo = 0;
   valideur = 0;
-  displayedColumns: string[] = ['id','Beneficiaire','Type','Status', 'Motif de rejet', 'Benevole associé', 'Traitée par'];
+  displayedColumns: string[] = ['id','Note', 'Commentaire', 'Aide','Benevol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filterValue: string = '';
   clickedRow: any;
   benevoles : any[] = [];
+  aides : any[] = [];
   beneficiaires : any[] = [];
   valideurs : any[] = [];
-  avis : any[] = [];
-  avisIndiv : any;
+  aide : any;
   clickedRowId: string = '';
   ready: boolean = false;
   data: any;
@@ -50,11 +49,12 @@ export class AidesTableComponent {
       this.dataSource.sort = this.sort;
     }
   }
-  onClickRow(row: any) {
-
+  async onClickRow(row: any) {
     console.log(row);
     this.filterValue = row.Capacity;
-    this.avisIndiv = this.findAvis(row.id);
+    console.log(row.aide_reference);
+    this.aide= this.findAide(row.aide_reference);
+    console.log(this.aide);
     this.clickedRow = row;
     this.clickedRowId = row.id;
   }
@@ -69,20 +69,8 @@ export class AidesTableComponent {
   async ngOnInit() {
     ELEMENT_DATA = [];
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-    if (this.tableType == 'Aides') {
-    this.httpClient.getAllAides().subscribe((data) => {
-      this.data = data;
-      console.log(this.data);
-      for (let i = 0; i < this.data.length; i++) {
-        let element = this.data[i];
-        ELEMENT_DATA.push(element);
-      }
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-      this.dataSource.sort = this.sort;
-    }
-    );}
-    else if (this.tableType == 'Beneficiaires') {
-      this.httpClient.aidesByBeneficiaire(this.id).subscribe((data) => {
+    if (this.tableType == 'Avis') {
+      this.httpClient.getAllAvis().subscribe((data) => {
         this.data = data;
         console.log(this.data);
         for (let i = 0; i < this.data.length; i++) {
@@ -91,11 +79,9 @@ export class AidesTableComponent {
         }
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.dataSource.sort = this.sort;
-      }
-      );}
-
-    else if (this.tableType == 'Benevoles') {
-      this.httpClient.aidesByBenevole(this.id).subscribe((data) => {
+      });}
+      else if (this.tableType == 'Benevoles') {
+      this.httpClient.getAvisByBenevole(this.id).subscribe((data) => {
         this.data = data;
         console.log(this.data);
         for (let i = 0; i < this.data.length; i++) {
@@ -104,25 +90,10 @@ export class AidesTableComponent {
         }
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.dataSource.sort = this.sort;
-      }
-      );}
-
-    else if (this.tableType == 'Valideurs') {
-      this.httpClient.aidesByValideur(this.id).subscribe((data) => {
-        this.data = data;
-        console.log(this.data);
-        for (let i = 0; i < this.data.length; i++) {
-          let element = this.data[i];
-          ELEMENT_DATA.push(element);
-        }
-        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-        this.dataSource.sort = this.sort;
-      }
-      );}
-
+      });}
       this.getAllBenevoles();
+      this.getAllAides();
       this.getAllBeneficiaires();
-      this.getAllValideurs();
       this.ready = true;
     }
   
@@ -144,12 +115,13 @@ export class AidesTableComponent {
       this.valideurs = data;
       })}
 
-  getAllAvis() {
-    this.httpClient.getAllAvis().subscribe((data) => {
-      this.avis = data;
+  getAllAides() {
+    this.httpClient.getAllAides().subscribe((data) => {
+      this.aides = data;
       console.log(data);
 
       })}
+
 
   benevolName(id: number) {
     if (id) {
@@ -167,6 +139,20 @@ export class AidesTableComponent {
   else {
     return '';
   }
+}
+findAide(id: number) {
+  if (id) {
+  let aide = '';
+  for (let i = 0; i < this.aides.length; i++) {
+    if (this.aides[i].id == id) {
+      aide = this.aides[i];
+    }
+  }
+  return aide;
+}
+else {
+  return '';
+}
 }
 
 beneficiaireName(id: number) {
@@ -186,15 +172,6 @@ else {
   return '';
 }
 }
-
-findAvis(id: number) {
-  let avis = this.httpClient.getAvisByAidId(id).subscribe((data) => {
-    this.avisIndiv = data;
-    }
-    );
-    return this.avisIndiv;
-}
-
 
 valideurName(id: number) {
   if (id) {
@@ -235,33 +212,6 @@ onClickAddConfirm() {
 
 }
 
-onSelectNoter() {
-  this.noter = !this.noter;
-}
-
-onClickNoterConfirm() {
-  if (this.clickedRow) {
-    let q = this.httpClient.postAide(this.clickedRow.id,this.newType).subscribe(
-      (response) => {
-        console.log('Aide notée successfully:', response);
-        // Handle success, if needed
-      },
-      (error) => {
-        console.error('Error noting Aide:', error);
-        // Handle error, if needed
-      }
-    );
-    this.ngOnInit();
-    this._snackBar.open('Aide notée', 'Fermer', {
-      duration: 2000,
-    });
-  }
-  this.noter = false;
-  this.ngOnInit();
-
-}
-
-
 onSelectAdd() {
   this.add = !this.add;
 }
@@ -282,82 +232,7 @@ onSelectRemove() {
     
   }
 }
-onSelectValider() {
-  this.valider = !this.valider;
-}
-
-onSelectRefuser() {
-  this.refuse = !this.refuse;
-}
-
-onClickValiderConfirm() {
-  if (this.clickedRow) {
-    let q = this.httpClient.validerAide(this.clickedRow.id,this.valideur).subscribe(
-      (response) => {
-        console.log('Aide validée successfully:', response);
-        // Handle success, if needed
-      },
-      (error) => {
-        console.error('Error validating Aide:', error);
-        // Handle error, if needed
-      }
-    );
-    this.ngOnInit();
-  }
-  this.valider = false;
-  ELEMENT_DATA = [];
-  this.ngOnInit();
-
-}
-
-onClickRefuserConfirm() {
-  if (this.clickedRow) {
-    let q = this.httpClient.refuserAide(this.clickedRow.id,this.valideur,this.newType).subscribe(
-      (response) => {
-        console.log('Aide refusée successfully:', response);
-        // Handle success, if needed
-      },
-      (error) => {
-        console.error('Error refusing Aide:', error);
-        // Handle error, if needed
-      }
-    );
-    this.ngOnInit();
-    this._snackBar.open('Aide refusée', 'Fermer', {
-      duration: 2000,
-    });
-  }
-  this.refuse = false;
-  this.ngOnInit();
-
-}
 
 
-onSelectAffecter() {
-  this.affecter = !this.affecter;
-}
-
-onClickAffecterConfirm() {
-  if (this.clickedRow) {
-    let q = this.httpClient.affecterAide(this.clickedRow.id,this.valideur,this.affectTo).subscribe(
-      (response) => {
-        console.log('Aide affectée successfully:', response);
-        // Handle success, if needed
-      },
-      (error) => {
-        console.error('Error affecting Aide:', error);
-        // Handle error, if needed
-      }
-    );
-    this.ngOnInit();
-    this._snackBar.open('Aide affectée', 'Fermer', {
-      duration: 2000,
-    });
-  }
-  this.affecter = false;
-  this.ngOnInit();
-
-
-}
 
 }

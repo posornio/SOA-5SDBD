@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.mas.AideManager.Model.Avis;
+import fr.insa.mas.AideManager.Model.DbInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -54,7 +56,10 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+id;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar, avis);
 				return aide;
 			}
 			return null;
@@ -79,7 +84,9 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+id;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar, avis);
 				aides.add(aide);
 			}
 			return aides;
@@ -104,7 +111,9 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+id;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar, avis);
 				aides.add(aide);
 			}
 			return aides;
@@ -129,7 +138,9 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,type, statusAide, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+idAide;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+				Aide aide = new Aide(idAide,type, statusAide, motif, benevolId,traitePar,demandePar, avis);
 				aides.add(aide);
 			}
 			return aides;
@@ -154,7 +165,9 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,typeAide, status, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+idAide;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+				Aide aide = new Aide(idAide,typeAide, status, motif, benevolId,traitePar,demandePar, avis);
 				aides.add(aide);
 			}
 			return aides;
@@ -179,7 +192,9 @@ public class AideController {
 				int benevolId = rs.getInt("benevol_id");
 				int traitePar = rs.getInt("traite_par");
 				int demandePar = rs.getInt("demande_par");
-				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar);
+				String avisUrl = "http://AvisManagerService/avis/getByAide/"+idAide;
+				Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+				Aide aide = new Aide(idAide,type, status, motif, benevolId,traitePar,demandePar, avis);
 				aides.add(aide);
 			}
 			return aides;
@@ -231,6 +246,7 @@ public class AideController {
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
+			restTemplate.delete("http://AvisManagerService/avis/delete/"+id);
 			return "Aide supprimée";
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -254,7 +270,9 @@ public class AideController {
 					int benevolId = rs.getInt("benevol_id");
 					int traitePar = rs.getInt("traite_par");
 					int demandePar = rs.getInt("demande_par");
-					Aide aide = new Aide(id,type, status, motif, benevolId,traitePar,demandePar);
+					String avisUrl = "http://AvisManagerService/avis/getByAide/"+id;
+					Avis avis = restTemplate.getForObject(avisUrl, Avis.class);
+					Aide aide = new Aide(id,type, status, motif, benevolId,traitePar,demandePar, avis);
 	                aides.add(aide);
 	            }
 	            return aides;

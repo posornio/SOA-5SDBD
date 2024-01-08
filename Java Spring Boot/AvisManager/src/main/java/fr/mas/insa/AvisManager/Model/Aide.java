@@ -1,4 +1,4 @@
-package fr.insa.mas.AideManager.Model;
+package fr.mas.insa.AvisManager.Model;
 
 public class Aide {
 	private int id;
@@ -82,7 +82,7 @@ public class Aide {
 		super();
 	}
 
-	public Aide(String status, String type, String motif_rejet, int benevol_id,int demande_par, Avis avis) {
+	public Aide(String status, String type, String motif_rejet, int benevol_id, int demande_par, Avis avis) {
 		super();
 		this.status = status;
 		this.type = type;

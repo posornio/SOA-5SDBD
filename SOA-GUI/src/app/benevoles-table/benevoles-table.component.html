@@ -95,3 +95,5 @@ Supprimer un benevole
   </div>
   <h1 *ngIf="this.clickedRow">Aides affectés à ce Benevol</h1>
   <app-aides-table *ngIf="this.clickedRow" [tableType]="'Benevoles'" [id]="this.clickedRow.id"></app-aides-table>
+  <h1 *ngIf="this.clickedRow">Avis associés à ce Benevol</h1>
+  <app-avis-table *ngIf="this.clickedRow" [tableType]="'Benevoles'" [id]="this.clickedRow.id"></app-avis-table>

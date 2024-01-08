@@ -1,0 +1,99 @@
+<button
+    class="btn-primary-delete"
+    *ngIf="this.clickedRow"
+    [class.btn-primary-delete-selected]="clickedRow"
+    (click)="onSelectRemove()"
+  >
+    Supprimer un avis
+  </button>
+
+  <div class="table">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Trier par id"
+          class="head"
+        >
+          ID
+        </th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          {{ element.id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Note">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Trier par Note"
+          class="head"
+        >
+          Note / 5
+        </th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          {{ element.note }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Commentaire">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sortActionDescription="Trier par type"
+            class="head"
+          >
+            Commentaire
+          </th>
+          <td mat-cell *matCellDef="let element" class="cell">
+            {{ element.commentaire }}
+          </td>
+        </ng-container>
+      <ng-container matColumnDef="Aide">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Trier par status"
+          class="head"
+        >
+          Aide 
+        </th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          {{ element.aide_reference }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Benevol">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Trier par status"
+          class="head"
+        >
+          Bénévole associé 
+        </th>
+        <td mat-cell *matCellDef="let element" class="cell">
+          {{ 
+            (benevolName(element.benevol_reference)) }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        (click)="onClickRow(row)"
+        [class.demo-row-is-clicked]="clickedRow === row"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+  </div>
+  <div *ngIf="this.clickedRow">
+    <h1>Aide associés à cet avis</h1>
+    <h2>Type : {{this.aide.type}}</h2>
+    <h2>Statut : {{this.aide.status}}</h2>
+    <h2> Benevole associé : {{benevolName(this.aide.benevol_id)}}</h2>
+    <h2> Beneficiaire associé : {{beneficiaireName(this.aide.demande_par)}}</h2>
+    </div>
+  

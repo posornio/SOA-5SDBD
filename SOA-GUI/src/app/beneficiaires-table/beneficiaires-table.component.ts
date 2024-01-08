@@ -27,6 +27,7 @@ export class BeneficiairesTableComponent {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filterValue: string = '';
   clickedRow: any;
+  benevoles : any[] = [];
   clickedRowId: string = '';
   ready: boolean = false;
   data: any;
@@ -66,8 +67,14 @@ export class BeneficiairesTableComponent {
     }
     );
     this.displayedColumns = ['id', 'Nom', 'Prenom'];
+    this.getAllBenevoles();
     this.ready = true;
   }
+
+  getAllBenevoles() {
+    this.httpClient.getAllBenevoles().subscribe((data) => {
+      this.benevoles = data;
+      })}
 
   onClickAddConfirm() {
     console.log(this.newNom);
